@@ -7,7 +7,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net"
 	"net/http"
@@ -54,8 +54,10 @@ func main() {
 		StatusCode: http.StatusOK,
 		ProtoMajor: 1,
 		ProtoMinor: 0,
-		Body:       ioutil.NopCloser(strings.NewReader("Hello.")),
+		Body:       io.NopCloser(strings.NewReader("Hello.")),
 	}
 
-	resp.Write(conn)
+	if err := resp.Write(conn); err != nil {
+		log.Panic(err)
+	}
 }

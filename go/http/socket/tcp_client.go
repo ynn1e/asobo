@@ -26,7 +26,9 @@ func main() {
 		log.Panic(err)
 	}
 
-	req.Write(conn)
+	if err := req.Write(conn); err != nil {
+		log.Panic(err)
+	}
 
 	resp, err := http.ReadResponse(bufio.NewReader(conn), req)
 	if err != nil {
